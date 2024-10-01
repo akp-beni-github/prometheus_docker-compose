@@ -1,0 +1,84 @@
+groups:
+- name: host_alerts
+  rules:
+  # Rule 1: High CPU usage on the host machine
+  - alert: HostHighCPUUsage
+    expr: (100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host machine {{ $labels.instance }} CPU usage is over 80%"
+      description: "Host CPU usage is {{ $value }}%."
+
+  # Rule 2: High Memory usage on the host machine
+  - alert: HostHighMemoryUsage
+    expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host machine {{ $labels.instance }} memory usage is over 80%"
+      description: "Host memory usage is over 80%."
+
+  # Rule 3: Host instance down
+  - alert: HostInstanceDown
+    expr: up{job="nodeexporter"} == 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Host machine {{ $labels.instance }} is down"
+      description: "The instance {{ $labels.instance }} is not reachable."
+
+- name: container_alerts
+  rules:
+  # Rule 4: High CPU usage for container (cAdvisor)
+  - alert: ContainerHighCPUUsage
+    expr: (rate(container_cpu_usage_seconds_total[5m]) * 100) > 80
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Container {{ $labels.container }} CPU usage is over 80%"
+      description: "Container CPU usage is {{ $value }}%."
+
+  # Rule 5: High Memory usage for container (cAdvisor)
+  - alert: ContainerHighMemoryUsage
+    expr: (container_memory_usage_bytes / container_spec_memory_limit_bytes) > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Container {{ $labels.container }} memory usage is over 80%"
+      description: "Container memory usage is over 80%."
+
+  # Rule 6: Container instance down
+  - alert: ContainerInstanceDown
+    expr: up{job="cadvisor"} == 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Container instance {{ $labels.container }} is down"
+      description: "The container instance {{ $labels.container }} is not reachable."
+
+  # Additional Rule 1: Disk space usage on the host machine
+  - alert: HostHighDiskUsage
+    expr: (node_filesystem_size_bytes{fstype!="tmpfs", fstype!="overlay"} - node_filesystem_free_bytes{fstype!="tmpfs", fstype!="overlay"}) / node_filesystem_size_bytes{fstype!="tmpfs", fstype!="overlay"} > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host machine {{ $labels.instance }} disk usage is over 80%"
+      description: "Host disk usage is over 80%."
+
+  # Additional Rule 2: Container restart count
+  - alert: ContainerRestarting
+    expr: rate(container_restart_count[5m]) > 0
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Container {{ $labels.container }} is restarting frequently"
+      description: "The container {{ $labels.container }} has restarted {{ $value }} times in the last 5 minutes."
