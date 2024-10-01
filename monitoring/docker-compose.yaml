@@ -8,6 +8,7 @@ services:
       #- cadvisor
     volumes:
        - "./prometheus/:/etc/prometheus/"
+       - "./prometheus/rules/:/rules/"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.retention.time=1d'
