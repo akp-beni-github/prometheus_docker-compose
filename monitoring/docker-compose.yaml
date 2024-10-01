@@ -31,19 +31,14 @@ services:
     networks:
       - popduck
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.40.0
-    container_name: cadvisor
-    ports: 
-      - "8080:8080"
-    privileged: true
+    image: raymondmm/cadvisor
     volumes:
-      # - "/c/:/rootfs:ro"
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      - '/:/rootfs:ro'
-      - '/var/run:/var/run:rw'
-      - '/sys:/sys:ro'
-      - '/var/lib/docker/:/var/lib/docker:ro'
-      - '/dev/disk/:/dev/disk:ro'
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
     networks: 
       - popduck
   nodeexporter:

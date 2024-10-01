@@ -16,5 +16,5 @@ qemu-system-aarch64 \
    -device intel-hda \
    -device hda-duplex \
    -drive file=ubuntu-latest.raw,format=raw,if=virtio,cache=writethrough \
-   -cdrom ~/Downloads/ubuntu-24.04.1-live-server-arm64.iso
+   -cdrom ~/Downloads/jammy-desktop-arm64.iso
 

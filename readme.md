@@ -16,14 +16,19 @@ resource
 - grafana
 
 
-qemu
+qemu ubuntu arm64
 https://www.youtube.com/watch?v=1JeKM-clj5E&t=105s
+
+# Documentation resources
 
 ## prom resources
 - api management: https://prometheus.io/docs/prometheus/latest/management_api/
 - prom rules: https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/
+- alertmanager https://prometheus.io/docs/alerting/latest/configuration/
 
-## graf 
+## grafana 
+- prometheus datasource: https://grafana.com/docs/grafana/latest/datasources/prometheus/
+- dashboard: https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/view-dashboard-json-model/
 
 
 

@@ -1,28 +1,28 @@
 {
     "dashboard": {
       "id": null,
-      "title": "Linux Node Dashboard",
+      "title": "Container Dashboard",
       "tags": [],
       "timezone": "browser",
       "panels": [
         {
           "type": "graph",
-          "title": "CPU Usage",
+          "title": "Container CPU Usage",
           "targets": [
             {
-              "expr": "rate(node_cpu_seconds_total[5m])",
-              "legendFormat": "{{cpu}}",
+              "expr": "rate(container_cpu_usage_seconds_total[5m])",
+              "legendFormat": "{{name}}",
               "refId": "A"
             }
           ]
         },
         {
           "type": "graph",
-          "title": "Memory Usage",
+          "title": "Container Memory Usage",
           "targets": [
             {
-              "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
-              "legendFormat": "Used Memory",
+              "expr": "container_memory_usage_bytes",
+              "legendFormat": "{{name}}",
               "refId": "A"
             }
           ]

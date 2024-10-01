@@ -1,28 +1,28 @@
 {
     "dashboard": {
       "id": null,
-      "title": "Linux Node Dashboard",
+      "title": "Prometheus Dashboard",
       "tags": [],
       "timezone": "browser",
       "panels": [
         {
           "type": "graph",
-          "title": "CPU Usage",
+          "title": "Prometheus CPU Usage",
           "targets": [
             {
-              "expr": "rate(node_cpu_seconds_total[5m])",
-              "legendFormat": "{{cpu}}",
+              "expr": "rate(prometheus_tsdb_head_samples_appended_total[5m])",
+              "legendFormat": "CPU Usage",
               "refId": "A"
             }
           ]
         },
         {
           "type": "graph",
-          "title": "Memory Usage",
+          "title": "Prometheus Memory Usage",
           "targets": [
             {
-              "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
-              "legendFormat": "Used Memory",
+              "expr": "prometheus_engine_query_duration_seconds",
+              "legendFormat": "Memory Usage",
               "refId": "A"
             }
           ]
