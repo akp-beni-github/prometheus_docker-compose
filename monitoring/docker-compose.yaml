@@ -31,6 +31,18 @@ services:
       retries: 30
     networks:
       - popduck
+  cadvisor:
+      image: gcr.io/cadvisor/cadvisor:v0.47.1
+      hostname: cadvisor
+      platform: linux/aarch64
+      volumes:
+        - "/:/rootfs:ro"
+        - "/var/run:/var/run:ro"
+        - "/sys:/sys:ro"
+        - "/var/lib/docker/:/var/lib/docker:ro"
+        - "/dev/disk/:/dev/disk:ro"
+      ports:
+        - "8080:8080"    
  
   nodeexporter:
     image: quay.io/prometheus/node-exporter:v1.2.2
