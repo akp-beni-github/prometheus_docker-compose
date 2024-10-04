@@ -43,7 +43,8 @@ services:
         - "/dev/disk/:/dev/disk:ro"
       ports:
         - "8080:8080"    
- 
+      networks:
+      - popduck  
   nodeexporter:
     image: quay.io/prometheus/node-exporter:v1.2.2
     container_name: nodeexporter
