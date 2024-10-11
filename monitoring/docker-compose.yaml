@@ -34,6 +34,7 @@ services:
   cadvisor:
       image: gcr.io/cadvisor/cadvisor:v0.47.1
       hostname: cadvisor
+      privileged: true
       platform: linux/aarch64
       volumes:
         - "/:/rootfs:ro"
@@ -41,6 +42,7 @@ services:
         - "/sys:/sys:ro"
         - "/var/lib/docker/:/var/lib/docker:ro"
         - "/dev/disk/:/dev/disk:ro"
+        - "/etc/machine-id:/etc/machine-id:ro"
       ports:
         - "8080:8080"    
       networks:
